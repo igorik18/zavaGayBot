@@ -18,25 +18,3 @@ def handler(event: dict, context: str):
         'statusCode': 200,
         'body': result
     }
-
-async def general(event, context):
-    # добавляем обработчики
-    add_user_handlers() # функция вынесена в main, потому что она будет изменяться каждый раз, когда будет добавляться обработчик
-    # запускаем функцию, которая сообщит приложению о наличие новых сообщений
-    return await handle_update(event)
-
-
-async def handle_update(event):
-    try:
-        logger.info('Processing update...')
-        await application.initialize()
-        for message in event["messages"]:
-            await application.process_update(
-                Update.de_json(json.loads(message["details"]["message"]["body"]), application.bot)
-            )
-            logger.info(f'Processed update {message["details"]["message"]["body"]}')
-            return 'Success'
-
-    except Exception as exc:
-        logger.info(f"Failed to process update with {exc}")
-    return 'Failure'
