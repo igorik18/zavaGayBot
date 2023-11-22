@@ -1,0 +1,6 @@
+functions-framework==3.*
+python-telegram-bot
+python-json-logger
+yandexcloud
+ydb
+boto3
